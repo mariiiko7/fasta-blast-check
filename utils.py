@@ -175,7 +175,7 @@ def get_top_alignment(result):
     
     Returns
     -------------------
-        target_data_list: a list of data, whose keys are ['rank'(int), 'identities'(float), 'query_start'(int), 'sbjct_start'(int),'start_difference'(int), 'alignment_length'(int), alignment'(result.alignment)]
+        target_data_list: a list of data, whose keys are ['identities'(float), 'query_start'(int), 'sbjct_start'(int),'start_difference'(int), 'alignment_length'(int), alignment'(result.alignment)]
     '''
 # alignments are sorted by rank in default
 # it should have one or zero element. in order to apply the same function as n31 to this return, make return value a list
@@ -183,6 +183,33 @@ def get_top_alignment(result):
     data = {}
     if len(result.alignments) > 0:
         alignment = result.alignments[0]
+        data['identities'] = alignment.hsps[0].identities[0]/alignment.hsps[0].identities[1]
+        data['query_start'] = alignment.hsps[0].query_start
+        data['sbjct_start'] = alignment.hsps[0].sbjct_start
+        data['start_difference'] = alignment.hsps[0].query_start - alignment.hsps[0].sbjct_start
+        data['alignment_length'] = len (alignment.hsps[0].query)
+        data['alignment'] = alignment
+        target_data_list.append(data)
+    return target_data_list
+
+def get_second_alignment(result):
+    '''
+    Extract second alignment from result.alignments and return their rank, identities, start_difference, query_start, sbjct_start, start_difference, alignment_length and alignment
+    
+    Parameters
+    -------------------
+        result: NCBIStandalone.BlastParser.parse(file) (refer: http://www.dalkescientific.com/writings/NBN/blast_parsing.html)
+    
+    Returns
+    -------------------
+        target_data_list: a list of data, whose keys are ['identities'(float), 'query_start'(int), 'sbjct_start'(int),'start_difference'(int), 'alignment_length'(int), alignment'(result.alignment)]
+    '''
+# alignments are sorted by rank in default
+# it should have one or zero element. in order to apply the same function as n31 to this return, make return value a list
+    target_data_list = []
+    data = {}      
+    if len(result.alignments) > 1:
+        alignment = result.alignments[1]
         data['identities'] = alignment.hsps[0].identities[0]/alignment.hsps[0].identities[1]
         data['query_start'] = alignment.hsps[0].query_start
         data['sbjct_start'] = alignment.hsps[0].sbjct_start
