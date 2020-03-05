@@ -1,4 +1,4 @@
-# fasta-file
+# fasta-blast-check
 # About
 
 This repository provides scripts for dealing with FASTA files and blast results.
