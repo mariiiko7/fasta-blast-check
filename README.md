@@ -1,9 +1,9 @@
 # fasta-files
-# About
+## About
 
 This repository provides scripts for dealing with FASTA files.
 
-# Scripts
+## Scripts
 
 - utils.py
 - FASTA_seq_check.ipynb
